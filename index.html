@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🧾 Monthly Expense Form</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="main-layout">
+  <!-- LEFT: Form Section -->
+  <div class="form-column">
+    <div class="app">
+      <h1>🧾 MONTHLY EXPENSE</h1>
+      <!-- PERSONAL DETAILS -->
+      <div class="personal-box">
+        <h2>PERSONAL DETAILS</h2>
+        <div class="personal-fields">
+          <div class="field">
+            <label>🆔 EMPLOYEE ID</label>
+            <div class="id-input">
+              <span class="prefix">JIPL</span>
+              <input type="text" id="empId" required />
+            </div>
+          </div>
+          <div class="field">
+            <label>👤 EMPLOYEE NAME</label>
+            <input type="text" id="empName" readonly />
+          </div>
+        </div>
+        <div class="field" style="margin-top: 10px;">
+          <label>👨‍💼 REPORTING MANAGER</label>
+          <input type="text" id="managerName" readonly />
+        </div>
+      </div>
+      <!-- EXPENSE FORM -->
+      <form id="expense-form">
+        <h2>💼 EXPENSES</h2>
+        <div id="expense-entries"></div>
+
+        <div class="button-row">
+          <button type="button" onclick="addExpenseRow()">➕ ADD EXPENSE</button>
+          <button type="submit">📤 SUBMIT</button>
+        </div>
+      </form>
+
+      <div class="loader" id="loader">SUBMITTING...</div>
+    </div>
+  </div>
+  <!-- RIGHT: Preview Panel -->
+  <div class="summary-column personal-box">
+    <h2>📋 PREVIEW</h2>
+    <div id="live-summary">
+      <p id="summary-empId">—</p>
+      <p id="summary-empName">—</p>
+      <p id="summary-manager">—</p>
+      <hr class="preview-divider" />
+
+      <div id="summary-expense-list"></div>
+    </div>
+  </div>
+</div> <!-- End of main-layout -->
+<script src="script.js"></script>
+</body>
+</html>

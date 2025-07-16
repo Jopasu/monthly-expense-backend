@@ -1,0 +1,118 @@
+:root {
+  --primary: #ffffff;
+  --primary-dark: #cfd8dc;
+  --accent: #ff6f00;
+  --bg-dark: #121212;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--primary);
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+}
+
+.form-column, .summary-column {
+  flex: 1;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(255, 111, 0, 0.2);
+}
+
+h1, h2 {
+  margin: 0 0 15px;
+  color: var(--accent);
+}
+
+.personal-box {
+  margin-bottom: 20px;
+}
+.field {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 5px;
+  color: var(--primary);
+}
+
+button {
+  background-color: var(--accent);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #ffa000;
+}
+#summary-expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.expense-preview-row {
+  display: grid;
+  grid-template-columns: 1fr 8px 1fr 8px 1fr;
+  align-items: center;
+  padding: 10px 12px;
+  background: #1d1d1d;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(255, 111, 0, 0.3);
+}
+
+.divider {
+  width: 2px;
+  height: 80%;
+  background-color: var(--accent);
+  margin: 0 auto;
+}
+
+.expense-type {
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left;
+}
+
+.expense-files {
+  color: var(--accent);
+  font-style: italic;
+  font-size: 13px;
+  text-align: center;
+}
+
+.expense-amount {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 14px;
+  font-style: italic;
+  text-align: right;
+}
