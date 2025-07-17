@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🧾 Monthly Expense Form</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
 <div class="main-layout">
   <!-- LEFT: Form Section -->
   <div class="form-column">
     <div class="app">
       <h1>🧾 MONTHLY EXPENSE</h1>
+
       <!-- PERSONAL DETAILS -->
       <div class="personal-box">
         <h2>PERSONAL DETAILS</h2>
@@ -33,6 +25,7 @@
           <input type="text" id="managerName" readonly />
         </div>
       </div>
+
       <!-- EXPENSE FORM -->
       <form id="expense-form">
         <h2>💼 EXPENSES</h2>
@@ -47,6 +40,7 @@
       <div class="loader" id="loader">SUBMITTING...</div>
     </div>
   </div>
+
   <!-- RIGHT: Preview Panel -->
   <div class="summary-column personal-box">
     <h2>📋 PREVIEW</h2>
@@ -56,10 +50,17 @@
       <p id="summary-manager">—</p>
       <hr class="preview-divider" />
 
-      <div id="summary-expense-list"></div>
+      <!-- 🆕 Preview Expense List -->
+      <div id="summary-expense-list">
+        <!-- Dynamically populated entries look like this: -->
+        <!--
+        <div class="expense-preview-row">
+          <div class="expense-type">BUS</div>
+          <div class="expense-amount">₹123</div>
+          <div class="expense-files">1 attachment</div>
+        </div>
+        -->
+      </div>
     </div>
   </div>
-</div> <!-- End of main-layout -->
-<script src="script.js"></script>
-</body>
-</html>
+</div>
