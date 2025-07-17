@@ -311,50 +311,68 @@ document.getElementById("expense-form").addEventListener("submit", function (e) 
   e.preventDefault();
   document.getElementById("loader").style.display = "flex";
 
-  const payload = {
-    empId: document.getElementById("empId").value,
-    empName: document.getElementById("empName").value,
-    managerName: document.getElementById("managerName").value,
-    expenses: []
-  };
+  const formData = new FormData();
 
-  const allGroups = document.querySelectorAll(".expense-row");
-  allGroups.forEach(row => {
-    const date = row.querySelector('input[type="date"]').value;
-    expenseTypes.forEach(type => {
-      const typeCheckbox = row.querySelector(`#${type.value}-${row.id}`);
-      if (typeCheckbox?.checked) {
-        const amountInput = row.querySelector(`#${type.value}-fields-${row.id} input[type="number"]`);
-        const filesInput = row.querySelector(`#${type.value}-fields-${row.id} input[type="file"]`);
-        payload.expenses.push({
-          type: type.label,
-          amount: amountInput?.value || "0",
-          attachments: filesInput?.files.length || 0,
-          date: date
-        });
-      }
+  // 🌟 Collect metadata
+  const empId = document.getElementById("empId").value;
+  const empName = document.getElementById("empName").value;
+  const managerEmail = document.getElementById("managerName").value;
+  const today = new Date();
+  const expenseMonth = today.toLocaleString('default', { month: 'long' });
+  const expenseYear = today.getFullYear();
+
+  formData.append("empId", empId);
+  formData.append("empName", empName);
+  formData.append("managerEmail", managerEmail);
+  formData.append("month", expenseMonth);
+  formData.append("year", expenseYear);
+
+  // 📎 Gather all receipt file attachments
+  let fileIndex = 0;
+  document.querySelectorAll("input[type='file']").forEach(input => {
+    Array.from(input.files).forEach(file => {
+      formData.append(`file-${fileIndex++}`, file);
     });
   });
 
+  // 🚀 Send to Google Apps Script backend
   fetch("https://script.google.com/macros/s/AKfycbyZdztMKjog8GkTvOoDznrEI7ke0-NKta8_6eG9_7hqzVYMp1i6UN9Ne5AYNKKUbAKp/exec", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: formData
   })
   .then(async res => {
     if (!res.ok) {
       const text = await res.text();
-      throw new Error(`Server responded with ${res.status}: ${text}`);
+      throw new Error(`Server error ${res.status}: ${text}`);
     }
     return res.text();
   })
   .then(msg => {
-    alert("✅ Submitted successfully: " + msg);
+    alert("✅ Submission successful: " + msg);
     document.getElementById("loader").style.display = "none";
+
+    // 📄 PDF Trigger Starts Here (Local download)
+    const header = document.getElementById("summary-header");
+    const summary = document.getElementById("summary-expense-list");
+
+    const fullSummary = document.createElement("div");
+    fullSummary.style.padding = "20px";
+    fullSummary.style.fontFamily = "Arial, sans-serif";
+    if (header) fullSummary.appendChild(header.cloneNode(true));
+    if (summary) fullSummary.appendChild(summary.cloneNode(true));
+
+    const opt = {
+      margin: 0.5,
+      filename: `${empId}_expense_summary.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(fullSummary).save();
   })
   .catch(err => {
-    alert("❌ Error submitting: " + err.message);
-    console.error(err);
+    alert("❌ Submission failed: " + err.message);
     document.getElementById("loader").style.display = "none";
   });
 });
