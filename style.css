@@ -1,100 +1,612 @@
 :root {
-  --primary: #ffffff;
-  --primary-dark: #cfd8dc;
-  --accent: #ff6f00;
-  --bg-dark: #121212;
+  --primary: #ff6f00;
+  --primary-dark: #ff8f00;
+  --bg: #121212;
+  --text: #f5f5f5;
+  --card: #1e1e1e;
+  --accent: #ffcc80;
 }
 
 body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
   margin: 0;
-  padding: 0;
-  background-color: var(--bg-dark);
-  color: var(--primary);
-  font-family: "Segoe UI", sans-serif;
-  font-size: 14px;
+  padding: 20px;
+  height: 100vh;
+  overflow: hidden;
 }
+
 .main-layout {
   display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 20px;
+  gap: 30px;
+  align-items: flex-start;
+  height: 100%;
+  overflow: hidden;
 }
 
-.form-column, .summary-column {
-  flex: 1;
-  background-color: #1e1e1e;
+/* LEFT SIDE: scrollable form */
+.form-column {
+  flex: 1 1 55%;
+  overflow-y: auto;
+  height: 100%;
+  padding-right: 10px;
+}
+
+.app {
+  background: var(--card);
+  padding: 20px;
   border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(255, 111, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
-h1, h2 {
-  margin: 0 0 15px;
-  color: var(--accent);
-}
-
-.personal-box {
-  margin-bottom: 20px;
-}
-.field {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: var(--primary-dark);
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-input[type="file"] {
-  width: 100%;
-  padding: 8px;
-  background-color: #2a2a2a;
-  border: none;
-  border-radius: 5px;
+h1, h2, h3, label {
   color: var(--primary);
+  text-transform: uppercase;
+}
+
+input, select, button {
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #2c2c2c;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+input:read-only {
+  background: #1d1d1d;
 }
 
 button {
-  background-color: var(--accent);
-  border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
+  background-color: var(--primary);
   color: black;
-  cursor: pointer;
   font-weight: bold;
+  border: none;
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background-color: #ffa000;
-}
-#summary-expense-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  background-color: var(--primary-dark);
 }
 
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.personal-box {
+  background: #2a2a2a;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 10px rgba(255, 111, 0, 0.3);
+}
+
+.personal-fields {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.field {
+  flex: 1 1 45%;
+  min-width: 220px;
+}
+
+.field input {
+  width: 100%;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+/* EMPLOYEE ID prefix */
+.id-input {
+  display: flex;
+  align-items: center;
+  background: #2c2c2c;
+  border: 1px solid #444;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.id-input .prefix {
+  background: #1a1a1a;
+  color: var(--accent);
+  padding: 7px;
+  font-weight: bold;
+  border-right: 1px solid #444;
+}
+
+.id-input input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 10px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.expense-row {
+  background: #2a2a2a;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 10px rgba(255, 111, 0, 0.3);
+}
+
+.type-heading {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--primary-dark);
+  text-align: left;
+}
+
+.type-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.type-option label {
+  flex: 1;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.type-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.bin-icon {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 19px;
+  cursor: pointer;
+  padding: 0 9px;
+}
+
+.type-fields {
+  display: none;
+  background: #1a1a1a;
+  padding: 12px;
+  border-radius: 5px;
+  margin: 10px 0 10px 0;
+  box-shadow: 0 0 8px rgba(255, 111, 0, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.type-fields input[type="number"] {
+  width: 90px;
+}
+
+.type-fields input[type="file"] {
+  flex: 1;
+}
+
+.file-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.file-preview div {
+  background: var(--accent);
+  color: black;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.file-preview div button {
+  background: transparent;
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* RIGHT SIDE: sticky, scrollable preview */
+.summary-column {
+  flex: 1 1 40%;
+  position: sticky;
+  top: 20px;
+  max-height: calc(90vh - 40px);
+  overflow-y: auto;
+  align-self: flex-start;
+}
+.expense-entry {
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+/* Preview content inside summary */
+#live-summary p,
+#live-summary li {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+#summary-expense-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 12px;
+}
+
+/* Highlight filled expenses */
+#summary-expense-list li.filled {
+  background: var(--accent);
+  color: black;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.loader {
+  display: none;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: var(--primary);
+  font-weight: bold;
+  z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: row; /* 👈 Force horizontal layout */
+    flex-wrap: wrap;
+  }
+
+  .form-column, .summary-column {
+    flex: 1 1 55%; /* Or adjust ratio as needed */
+    max-height: none;
+    position: relative; /* Remove sticky if it glitches */
+  }
+
+  .summary-column {
+    margin-top: 0; /* 🧹 Prevent it from jumping below */
+  }
+
+  .personal-fields {
+    flex-direction: column;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .type-fields input {
+    width: 100%;
+  }
+}
+
+/* Custom Scrollbar for dark theme */
+.form-column::-webkit-scrollbar,
+.summary-column::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+.form-column::-webkit-scrollbar-track,
+.summary-column::-webkit-scrollbar-track {
+  background: #1d1d1d;
+  border-radius: 10px;
+}
+
+/* Handle */
+.form-column::-webkit-scrollbar-thumb,
+.summary-column::-webkit-scrollbar-thumb {
+  background-color: var(--primary); /* Orange shade */
+  border-radius: 10px;
+  border: 2px solid #1d1d1d; /* Gives the thumb padding against the track */
+  transition: background 0.3s;
+}
+
+/* Hover effect */
+.form-column::-webkit-scrollbar-thumb:hover,
+.summary-column::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Optionally hide scrollbars until hover */
+.form-column,
+.summary-column {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #1d1d1d;
+  overflow-y: auto;
+}
+
+/* Hide scrollbar in Firefox until hover */
+@media screen and (-moz-touch-enabled: 0) {
+  .form-column::-webkit-scrollbar,
+  .summary-column::-webkit-scrollbar {
+    display: none;
+  }
+  .form-column:hover::-webkit-scrollbar,
+  .summary-column:hover::-webkit-scrollbar {
+    display: block;
+  }
+}
+/* Custom Scrollbar Styling */
+.form-column::-webkit-scrollbar,
+.summary-column::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.form-column::-webkit-scrollbar-track,
+.summary-column::-webkit-scrollbar-track {
+  background: #1d1d1d;
+  border-radius: 10px;
+}
+
+.form-column::-webkit-scrollbar-thumb,
+.summary-column::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+  border: 2px solid #1d1d1d;
+  transition: background 0.3s;
+}
+
+.form-column::-webkit-scrollbar-thumb:hover,
+.summary-column::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-dark);
+}
+
+.form-column,
+.summary-column {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #1d1d1d;
+  overflow-y: auto;
+}
+
+/* Expense Preview: Grouped by Date */
+.date-expense-list {
+  list-style: none;
+  padding-left: 25px;
+  margin-top: 2px;
+}
+
+.date-expense-list li {
+  background: var(--accent);
+  color: black;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+/* 📎 File preview pills (responsive) */
+.file-preview div {
+  background: var(--accent);
+  color: black;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 5px;
+  max-width: fit-content;
+  height: fit-content;
+}
+
+/* 💰 Amount styling */
+.date-expense-list .amount {
+   color: #ff4081;
+  font-weight: bold;
+  font-style: italic; /* softer orange for contrast */
+}
+
+/* ➕ Date total at bottom */
+.date-total {
+  text-align: right;
+  margin-top: 4px;
+  font-weight: bold;
+  color: #FF0000;
+  font-size: 11px;
+}
+/* 💰 Make expense amount red */
+.date-expense-list .amount {
+  color: #ff4081; /* vibrant red */
+  font-weight: bold;
+  
+}
+
+/* 📉 Reduce font size under EXPENSES section (excluding total) */
+/* 🔤 Reduce font size inside expense preview list */
+.date-expense-list li {
+  font-size: 12px; /* or adjust to your preferred size */
+  line-height: 1.3;
+  color: var(--text); /* preserves your dark theme contrast */
+}
+
+/* 💰 Preserve total styling as-is */
+.date-total {
+  font-size: 14px; /* bold badge already styled */
+  font-weight: bold;
+  background-color: #ffcc80;
+  color: black;
+  padding: 4px 10px;
+  border-radius: 30px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+
+/* 📎 File preview pills: compact size */
+.file-preview div {
+  background: var(--accent);
+  color: black;
+  padding: 1px 1px;
+  border-radius: 7px;
+  font-size: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  max-height: 16px;
+  max-width: max-content;
+}
+.date-total {
+  transition: transform 0.2s ease;
+}
+.date-total.updated {
+  transform: scale(1.05);
+}
+
+/* 🗓️ Date heading inside expense preview */
+#summary-expense-list > li > strong {
+  font-size: 13px;         /* Smaller than default */
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* 🎯 Badge for total amount under each date */
+.date-total {
+  text-align: right;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #ffcc80;
+  color: red;
+  padding: 2px 8px;
+  border-radius: 8px;
+  display: inline-block;
+  float: right; /* 👈 Moves the badge to the right */
+  clear: both;
+  margin-left: auto;
+}
+.preview-divider {
+  margin: 20px 0; /* Increased from 12px */
+}
+
+.date-group {
+  margin-bottom: 24px; /* Adds extra space below each date block */
+}
+
+.date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.date-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--primary-dark);
+}
+
+h3 {
+  font-size: 14px;   /* Subheadings like Expenses under PREVIEW */
+}
+
+/* 💡 Optional: label text inside form fields */
+label {
+  font-size: 14px;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+h1 {
+  font-size: 22px;   /* App title (MONTHLY EXPENSE) */
+  /* 🧍 PERSONAL DETAILS Heading */
+.personal-box h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+/* 📅 DATE Heading under each expense row */
+.type-heading {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary-dark);
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+.personal-box label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+.preview-orange span.filled {
+  color: orange;
+  font-weight: bold;
+}
+/* Highlight amount in preview entries */
+.expense-entry {
+  font-style: italic;             /* Italic text */
+  font-size: 12px;                /* Smaller font */
+}
+
+.expense-entry::after {
+  content: "";
+}
+
+.expense-entry {
+  color: var(--text);
+}
+
+.expense-entry .amount {
+  color: var(--accent); /* uses your defined orange shade */
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+.expense-entry .files {
+  color: var(--accent); /* changes to orange */
+  font-style: italic;
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .date-total {
+    transition: none;
+  }
+}
 .expense-preview-row {
   display: grid;
-  grid-template-columns: 1fr 8px 1fr 8px 1fr;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 10px 12px;
-  background: #1d1d1d;
-  border-radius: 8px;
-  box-shadow: 0 0 6px rgba(255, 111, 0, 0.3);
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.divider {
-  width: 2px;
-  height: 80%;
-  background-color: var(--accent);
-  margin: 0 auto;
-}
-
+/* Left Column: Expense Type */
 .expense-type {
   color: var(--primary);
   font-weight: bold;
@@ -102,17 +614,17 @@ button:hover {
   text-align: left;
 }
 
-.expense-files {
-  color: var(--accent);
-  font-style: italic;
-  font-size: 13px;
-  text-align: center;
+/* Center Divider Line */
+.divider {
+  height: 1px;
+  background-color: var(--accent);
+  width: 100%;
 }
 
+/* Right Column: Amount */
 .expense-amount {
   color: var(--accent);
   font-weight: bold;
   font-size: 14px;
-  font-style: italic;
   text-align: right;
 }
